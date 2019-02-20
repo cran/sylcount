@@ -1,7 +1,7 @@
 Package: sylcount
 Type: Package
 Title: Syllable Counting and Readability Measurements
-Version: 0.1-0
+Version: 0.2-0
 Description: An English language syllable counter, plus readability score
     measure-er.  The package has been carefully optimized and should be very
     efficient, both in terms of run time performance and memory consumption.
@@ -18,8 +18,8 @@ Authors@R: c(person("Drew", "Schmidt", role=c("aut", "cre"),
 Maintainer: Drew Schmidt <wrathematics@gmail.com>
 URL: https://github.com/wrathematics/sylcount
 BugReports: https://github.com/wrathematics/sylcount/issues
-RoxygenNote: 6.0.1
-Packaged: 2017-04-07 04:48:46 UTC; mschmid3
+RoxygenNote: 6.1.1
+Packaged: 2019-02-19 22:14:18 UTC; mschmid3
 Author: Drew Schmidt [aut, cre]
 Repository: CRAN
-Date/Publication: 2017-04-07 06:19:11 UTC
+Date/Publication: 2019-02-20 09:30:03 UTC

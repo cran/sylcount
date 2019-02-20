@@ -1,8 +1,11 @@
 # sylcount
 
-* **Version:** 0.1-0
-* **License:** [![License](http://img.shields.io/badge/license-BSD%202--Clause-orange.svg?style=flat)](http://opensource.org/licenses/BSD-2-Clause)
-* **Author:** Drew Schmidt
+* **Version:** 0.2-0
+* **License:** [BSD 2-Clause](http://opensource.org/licenses/BSD-2-Clause)
+* **Author:** Drew Schmidt (wrathematics .AT. gmail .DOT. com)
+* **Project home**: https://github.com/wrathematics/sylcount/
+* **Bug reports**: https://github.com/wrathematics/sylcount/issues
+
 
 
 

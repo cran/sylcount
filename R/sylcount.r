@@ -1,6 +1,10 @@
 #' sylcount
 #' 
+#' @description
 #' A vectorized syllable counter for English language text.
+#' 
+#' Because of the R memory allocations required, the operation is not thread
+#' safe.  It is evaluated in serial. 
 #' 
 #' @details
 #' The maximum supported word length is 64 characters. For any token having more
@@ -26,15 +30,17 @@
 #' A list of dataframes.
 #' 
 #' @examples
-#' \dontrun{
 #' library(sylcount)
 #' a <- "I am the very model of a modern major general."
 #' b <- "I have information vegetable, animal, and mineral."
 #' 
 #' sylcount(c(a, b))
 #' sylcount(c(a, b), counts.only=FALSE)
-#' }
 #' 
+#' @useDynLib sylcount R_sylcount
 #' @seealso \code{\link{readability}}
 #' @export
-sylcount <- function(s, counts.only=TRUE) .Call(R_sylcount, s, counts.only)
+sylcount <- function(s, counts.only=TRUE)
+{
+  .Call(R_sylcount, s, counts.only)
+}

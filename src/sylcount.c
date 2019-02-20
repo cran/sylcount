@@ -3,7 +3,9 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <math.h>
 
+#include "include/reactor.h"
 #include "include/RNACI.h"
 #include "include/sylcount.h"
 
@@ -11,27 +13,6 @@
 #define ITER_PER_CHECK 256
 
 #define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
-#define THROW_MEMERR error("unable to allocate memory")
-#define CHECKMALLOC(s) if (s == NULL) THROW_MEMERR
-
-#define CHECK_IS_FLAG(x, argname) \
-  if (TYPEOF(x) != LGLSXP || LENGTH(x) != 1 || LOGICAL(x)[0] == NA_LOGICAL){ \
-    error("argument '%s' must be a flag", argname);}
-
-#define CHECK_IS_STRINGS(s) \
-  if(LENGTH(s) < 1 || TYPEOF(s) != STRSXP){ \
-    error("argument 's' must be a vector of strings\n");}
-
-// #include <R_ext/Utils.h>
-// static inline void check_interrupt_fun(void *ignored)
-// {
-//   R_CheckUserInterrupt();
-// }
-// 
-// static bool check_interrupt()
-// {
-//   return (R_ToplevelExec(check_interrupt_fun, NULL) == FALSE);
-// }
 
 static inline bool is_sentend(const char c)
 {
@@ -80,14 +61,41 @@ static inline double cl_score(const uint32_t tot_chars, const uint32_t tot_words
 
 
 
-SEXP R_readability(SEXP s_)
+static inline void counts_set_degenerate(SEXP chars, SEXP wordchars, SEXP words, SEXP nw,
+  SEXP sents, SEXP sylls, SEXP polys, const int i)
+{
+  INT(chars, i) = 0;
+  INT(wordchars, i) = 0;
+  INT(words, i) = 0;
+  INT(nw, i) = 0;
+  INT(sents, i) = 0;
+  INT(sylls, i) = 0;
+  INT(polys, i) = 0;
+}
+
+static inline void scores_set_degenerate(SEXP re, SEXP gl, SEXP ari, SEXP smog,
+  SEXP cl, const int i)
+{
+  DBL(re, i) = R_NaN;
+  DBL(gl, i) = R_NaN;
+  INT(ari, i) = NA_INTEGER;
+  DBL(smog, i) = R_NaN;
+  DBL(cl, i) = R_NaN;
+}
+
+
+
+SEXP R_readability(SEXP s_, SEXP nthreads_)
 {
   SEXP ret, ret_names;
   SEXP chars, wordchars, words, nw, sents, sylls, polys;
   SEXP ari, re, gl, smog, cl;
-  const int len = LENGTH(s_);
   
   CHECK_IS_STRINGS(s_);
+  CHECK_IS_POSINT(nthreads_, "nthreads");
+  
+  const int len = LENGTH(s_);
+  const int nthreads = asInteger(nthreads_);
   
   newRvec(chars, len, "int");
   newRvec(wordchars, len, "int");
@@ -102,14 +110,31 @@ SEXP R_readability(SEXP s_)
   newRvec(smog, len, "dbl");
   newRvec(cl, len, "dbl");
   
-  
-  #pragma omp parallel
+  #ifdef _OPENMP
+  #pragma omp parallel num_threads(nthreads)
+  #endif
   {
     char buf[BUFLEN];
     
+    #ifdef _OPENMP
     #pragma omp for
+    #endif
     for (int i=0; i<len; i++)
     {
+      const char *const s = CHARPT(s_, i);
+      const int slen = strlen(s);
+      
+      int j = 0;
+      while (j < slen && s[j] == ' ')
+        j++;
+      
+      if (slen == 0 || j == slen)
+      {
+        counts_set_degenerate(chars, wordchars, words, nw, sents, sylls, polys, i);
+        scores_set_degenerate(re, gl, ari, smog, cl, i);
+        continue;
+      }
+      
       uint32_t tot_wordchars = 0;
       uint32_t tot_words = 0;
       uint32_t tot_nonwords = 0;
@@ -117,13 +142,10 @@ SEXP R_readability(SEXP s_)
       uint32_t tot_sylls = 0;
       uint32_t tot_polys = 0;
       
-      const char *const s = CHARPT(s_, i);
-      const int slen = strlen(s);
-      
       int start = 0;
       int end;
       
-      for (int j=0; j<=slen && slen>0; j++)
+      for (; j<=slen && slen>0; j++)
       {
         if (isalnum(s[j]))
           tot_wordchars++;
@@ -181,8 +203,8 @@ SEXP R_readability(SEXP s_)
   }
   
   
-  ret_names = make_list_names(12, "chars", "wordchars", "words", "nonwords", "sents", "sylls", "polys", "re", "gl", "ari", "smog", "cl");
-  ret = make_dataframe(RNULL, ret_names, 12, chars, wordchars, words, nw, sents, sylls, polys, re, gl, ari, smog, cl);
+  make_list_names(ret_names, 12, "chars", "wordchars", "words", "nonwords", "sents", "sylls", "polys", "re", "gl", "ari", "smog", "cl");
+  make_dataframe(ret, RNULL, ret_names, 12, chars, wordchars, words, nw, sents, sylls, polys, re, gl, ari, smog, cl);
   
   R_END;
   return ret;
@@ -227,15 +249,15 @@ static SEXP R_sylcount_countsAndWords(SEXP s_)
   {
     SEXP localdf, localdf_names;
     SEXP word, sylls;
-    const char*const s = CHARPT(s_, i);
+    const char *const s = CHARPT(s_, i);
     const int slen = strlen(s);
     
     int nwords = count_words(slen, s);
     
     newRvec(word, nwords, "str");
     newRvec(sylls, nwords, "int");
-    localdf_names = make_list_names(2, "word", "syllables");
-    localdf = make_dataframe(RNULL, localdf_names, 2, word, sylls);
+    make_list_names(localdf_names, 2, "word", "syllables");
+    make_dataframe(localdf, RNULL, localdf_names, 2, word, sylls);
     SET_VECTOR_ELT(ret, i, localdf);
     
     int start = 0;
@@ -265,7 +287,7 @@ static SEXP R_sylcount_countsAndWords(SEXP s_)
       }
     }
     
-    UNPROTECT(5);
+    UNPROTECT(4);
   }
   
   
@@ -361,13 +383,16 @@ SEXP R_sylcount(SEXP s, SEXP counts_only)
 // Basic text document count summaries
 // -------------------------------------------------------
 
-SEXP R_corpus_summary(SEXP s_)
+SEXP R_corpus_summary(SEXP s_, SEXP nthreads_)
 {
   SEXP ret, ret_names;
   SEXP chars, wordchars, words, nw, sents, sylls, polys;
-  const int len = LENGTH(s_);
   
   CHECK_IS_STRINGS(s_);
+  CHECK_IS_POSINT(nthreads_, "nthreads");
+  
+  const int len = LENGTH(s_);
+  const int nthreads = asInteger(nthreads_);
   
   newRvec(chars, len, "int");
   newRvec(wordchars, len, "int");
@@ -377,14 +402,30 @@ SEXP R_corpus_summary(SEXP s_)
   newRvec(sylls, len, "int");
   newRvec(polys, len, "int");
   
-  
-  #pragma omp parallel
+  #ifdef _OPENMP
+  #pragma omp parallel num_threads(nthreads)
+  #endif
   {
     char buf[BUFLEN];
     
+    #ifdef _OPENMP
     #pragma omp for
+    #endif
     for (int i=0; i<len; i++)
     {
+      const char *const s = CHARPT(s_, i);
+      const int slen = strlen(s);
+      
+      int j = 0;
+      while (j < slen && s[j] == ' ')
+        j++;
+      
+      if (slen == 0 || j == slen)
+      {
+        counts_set_degenerate(chars, wordchars, words, nw, sents, sylls, polys, i);
+        continue;
+      }
+      
       uint32_t tot_wordchars = 0;
       uint32_t tot_words = 0;
       uint32_t tot_nonwords = 0;
@@ -392,13 +433,10 @@ SEXP R_corpus_summary(SEXP s_)
       uint32_t tot_sylls = 0;
       uint32_t tot_polys = 0;
       
-      const char *const s = CHARPT(s_, i);
-      const int slen = strlen(s);
-      
       int start = 0;
       int end;
       
-      for (int j=0; j<=slen && slen>0; j++)
+      for (; j<=slen && slen>0; j++)
       {
         if (isalnum(s[j]))
           tot_wordchars++;
@@ -412,7 +450,7 @@ SEXP R_corpus_summary(SEXP s_)
             j++;
           
           end = j;
-          if (end-start > BUFLEN)
+          if (end-start+1 > BUFLEN)
           {
             tot_nonwords++;
             continue;
@@ -450,8 +488,8 @@ SEXP R_corpus_summary(SEXP s_)
     }
   }
   
-  ret_names = make_list_names(7, "chars", "wordchars", "words", "nonwords", "sents", "sylls", "polys");
-  ret = make_dataframe(RNULL, ret_names, 7, chars, wordchars, words, nw, sents, sylls, polys);
+  make_list_names(ret_names, 7, "chars", "wordchars", "words", "nonwords", "sents", "sylls", "polys");
+  make_dataframe(ret, RNULL, ret_names, 7, chars, wordchars, words, nw, sents, sylls, polys);
   
   R_END;
   return ret;
