@@ -1,5 +1,5 @@
-ed5cfbbea1ee9434f5f284197f5cd76e *ChangeLog
-e764e05f77e40090c374f2bc6604d930 *DESCRIPTION
+2a8a326f771994f8246f1ec68cffbdac *ChangeLog
+549fa6a2055b7a984d5767d852612467 *DESCRIPTION
 db6b0ac7591bfe36fe29c06f5c7f8ce8 *LICENSE
 830ab20b47c7acd482e8fb6487c45a67 *NAMESPACE
 7fa54278395f30723b3d35ec7a9d9868 *R/doc_counts.r
@@ -7,7 +7,7 @@ db6b0ac7591bfe36fe29c06f5c7f8ce8 *LICENSE
 fb09f6c05ac10767f24525e2d0874aca *R/sylcount-package.r
 75dc04a9f9dde202ac7695eba307a591 *R/sylcount.nthreads.r
 b3734998131bf1d2269fbf8f318722f0 *R/sylcount.r
-bccad6984bed840fb0eca1676b2be8bd *README.md
+008e0becbacb3e2eb574734c402c9187 *README.md
 568cc65f24ab8abe07975404b3ce9db5 *cleanup
 b589a0c8445c89ff9eca116cd58a55de *configure
 2d2f5ad531fa97242fc2d1df50601b24 *configure.ac
@@ -23,7 +23,7 @@ f225fd51e1d3eb10b83d7e3f415a89de *man/doc_counts.Rd
 d7f1f78f7b6f96e61d09ebacc287f264 *src/include/hash.h
 531e126d0a1fde18833a3edb18827b67 *src/include/reactor.h
 023cf4ccf42d6becb251dd630bfe9862 *src/include/sylcount.h
-9fbbd828411a2770eeb72779cea195a7 *src/sylcount.c
+8bffb4692cfc8fe00f21f1b1993ef6df *src/sylcount.c
 7677749f70804b3b6ddfcf9536863b87 *src/sylcount_native.c
 b6aadd6b9f83b793e87c0f9855950660 *src/sylcount_nthreads.c
 bbb5e29d8e772a49815c0e67f2b41f03 *tests/degenerate_cases.r
