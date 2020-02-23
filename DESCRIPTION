@@ -1,7 +1,7 @@
 Package: sylcount
 Type: Package
 Title: Syllable Counting and Readability Measurements
-Version: 0.2-1
+Version: 0.2-2
 Description: An English language syllable counter, plus readability score
     measure-er. For readability, we support 'Flesch' Reading Ease and
     'Flesch-Kincaid' Grade Level ('Kincaid' 'et al'. 1975)
@@ -26,8 +26,8 @@ Authors@R: c(person("Drew", "Schmidt", role=c("aut", "cre"),
 Maintainer: Drew Schmidt <wrathematics@gmail.com>
 URL: https://github.com/wrathematics/sylcount
 BugReports: https://github.com/wrathematics/sylcount/issues
-RoxygenNote: 6.1.1
-Packaged: 2019-03-11 10:28:52 UTC; mschmid3
+RoxygenNote: 7.0.2
+Packaged: 2020-02-20 14:13:47 UTC; mschmid3
 Author: Drew Schmidt [aut, cre]
 Repository: CRAN
-Date/Publication: 2019-03-12 09:50:03 UTC
+Date/Publication: 2020-02-23 17:00:02 UTC
