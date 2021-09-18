@@ -1,5 +1,5 @@
-e57be292f5287d0b23a5efd04ac16585 *ChangeLog
-349e90bb615155c0bb90cfae34f92655 *DESCRIPTION
+d314f2ee97abfe27962fa3e183dc2aae *ChangeLog
+df5b046298d00b0f72b0073a363a52cc *DESCRIPTION
 db6b0ac7591bfe36fe29c06f5c7f8ce8 *LICENSE
 830ab20b47c7acd482e8fb6487c45a67 *NAMESPACE
 7fa54278395f30723b3d35ec7a9d9868 *R/doc_counts.r
@@ -7,10 +7,10 @@ de3961c6f50316812d7f663a09326f5e *R/readability.r
 e00bf2f2a9fd529a7eda97ceb6b30f2e *R/sylcount-package.r
 75dc04a9f9dde202ac7695eba307a591 *R/sylcount.nthreads.r
 b3734998131bf1d2269fbf8f318722f0 *R/sylcount.r
-bb512764a30c4666f5abba25166c5e35 *README.md
+315cab4b359c9a2c98585699f77e1079 *README.md
 568cc65f24ab8abe07975404b3ce9db5 *cleanup
-b589a0c8445c89ff9eca116cd58a55de *configure
-2d2f5ad531fa97242fc2d1df50601b24 *configure.ac
+b219edcefe901103be84c78313c39679 *configure
+d7fda87e672875b4195dfbbc13e491b2 *configure.ac
 d41d8cd98f00b204e9800998ecf8427e *configure.win
 f225fd51e1d3eb10b83d7e3f415a89de *man/doc_counts.Rd
 ea9ffcc2849aee144b44d5f06cfc7e2d *man/readability.Rd
@@ -25,7 +25,7 @@ d7f1f78f7b6f96e61d09ebacc287f264 *src/include/hash.h
 023cf4ccf42d6becb251dd630bfe9862 *src/include/sylcount.h
 8bffb4692cfc8fe00f21f1b1993ef6df *src/sylcount.c
 8719b5cc9825e241541f951b3b183361 *src/sylcount_native.c
-b6aadd6b9f83b793e87c0f9855950660 *src/sylcount_nthreads.c
+fa622e1e21807a0b4979fcbc53826509 *src/sylcount_nthreads.c
 bbb5e29d8e772a49815c0e67f2b41f03 *tests/degenerate_cases.r
 2d873573e08e8275a85db3ba2f61dfb1 *tests/readability.r
 5cb3c4ac18292a6d27f6c2d2467b8065 *tests/sylcount.r
