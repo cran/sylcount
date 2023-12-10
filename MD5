@@ -1,5 +1,5 @@
-78e698bb9349ff8d223476f0ea2b0f2f *ChangeLog
-22d48d01cce1aa6316996d582518c115 *DESCRIPTION
+22f07bcac0efbb7c00af678c2215994c *ChangeLog
+da3a279e63c8c71adfdaff4f0d6e4e40 *DESCRIPTION
 db6b0ac7591bfe36fe29c06f5c7f8ce8 *LICENSE
 830ab20b47c7acd482e8fb6487c45a67 *NAMESPACE
 9b4b4892bf4d0f56906c0e12c0f0aae4 *R/doc_counts.r
@@ -7,7 +7,7 @@ db6b0ac7591bfe36fe29c06f5c7f8ce8 *LICENSE
 c397832eba6cbae70c904529b0cf8f14 *R/sylcount-package.r
 21b7f7918da6fcbcea865e161fb6fcd3 *R/sylcount.nthreads.r
 a089f0bcd9ce8e97e2f801633aea5d11 *R/sylcount.r
-161d3c0e323610c59348259e6c92425e *README.md
+a532934d75ada2875f2960628ec402bb *README.md
 568cc65f24ab8abe07975404b3ce9db5 *cleanup
 b219edcefe901103be84c78313c39679 *configure
 d7fda87e672875b4195dfbbc13e491b2 *configure.ac
@@ -21,7 +21,7 @@ ea9ffcc2849aee144b44d5f06cfc7e2d *man/readability.Rd
 868c2acd29d90cab7b660bbb962b999e *src/include/RNACI.h
 1e186e849610e36e094532f5b55672bf *src/include/common.h
 d7f1f78f7b6f96e61d09ebacc287f264 *src/include/hash.h
-531e126d0a1fde18833a3edb18827b67 *src/include/reactor.h
+5fd45f19447a98d364f6682eb7cf1fa0 *src/include/reactor.h
 023cf4ccf42d6becb251dd630bfe9862 *src/include/sylcount.h
 8bffb4692cfc8fe00f21f1b1993ef6df *src/sylcount.c
 e764eb11fbb59ed44e8421cb1cbbee42 *src/sylcount_native.c

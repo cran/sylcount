@@ -1,15 +1,14 @@
 Package: sylcount
 Type: Package
 Title: Syllable Counting and Readability Measurements
-Version: 0.2-5
+Version: 0.2-6
 Description: An English language syllable counter, plus readability score
     measure-er. For readability, we support 'Flesch' Reading Ease and
     'Flesch-Kincaid' Grade Level ('Kincaid' 'et al'. 1975)
     <https://stars.library.ucf.edu/cgi/viewcontent.cgi?article=1055&context=istlibrary>,
     Automated Readability Index ('Senter' and Smith 1967)
     <https://apps.dtic.mil/sti/citations/AD0667273>,
-    Simple Measure of Gobbledygook (McLaughlin 1969)
-    <https://www.semanticscholar.org/paper/SMOG-Grading-A-New-Readability-Formula.-Laughlin/5fccb74c14769762b3de010c5e8a1a7ce700d17a>,
+    Simple Measure of Gobbledygook (McLaughlin 1969),
     and 'Coleman-Liau' (Coleman and 'Liau' 1975) <doi:10.1037/h0076540>. The
     package has been carefully optimized and should be very efficient, both in
     terms of run time performance and memory consumption. The main methods are
@@ -26,7 +25,7 @@ Maintainer: Drew Schmidt <wrathematics@gmail.com>
 URL: https://github.com/wrathematics/sylcount
 BugReports: https://github.com/wrathematics/sylcount/issues
 RoxygenNote: 7.1.2
-Packaged: 2022-11-04 13:55:07 UTC; mschmid3
+Packaged: 2023-12-10 18:57:57 UTC; mschmid3
 Author: Drew Schmidt [aut, cre]
 Repository: CRAN
-Date/Publication: 2022-11-04 15:20:02 UTC
+Date/Publication: 2023-12-10 19:10:02 UTC
